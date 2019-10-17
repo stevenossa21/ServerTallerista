@@ -139,7 +139,7 @@ public class TalleristaDao {
                stmt.setString(2, valueObject.getName()); 
                stmt.setString(3, valueObject.getLast_name()); 
                stmt.setString(4, valueObject.getEmail()); 
-               stmt.setString(5, valueObject.getAge()); 
+               stmt.setInt(5, valueObject.getAge()); 
 
                int rowcount = databaseUpdate(conn, stmt);
                if (rowcount != 1) {
@@ -179,7 +179,7 @@ public class TalleristaDao {
               stmt.setString(1, valueObject.getName()); 
               stmt.setString(2, valueObject.getLast_name()); 
               stmt.setString(3, valueObject.getEmail()); 
-              stmt.setString(4, valueObject.getAge()); 
+              stmt.setInt(4, valueObject.getAge()); 
 
               stmt.setInt(5, valueObject.getId()); 
 
@@ -334,9 +334,9 @@ public class TalleristaDao {
               sql.append("AND email LIKE '").append(valueObject.getEmail()).append("%' ");
           }
 
-          if (valueObject.getAge() != null) {
+          if (valueObject.getAge() != 0) {
               if (first) { first = false; }
-              sql.append("AND age LIKE '").append(valueObject.getAge()).append("%' ");
+              sql.append("AND age = ").append(valueObject.getAge()).append(" ");
           }
 
 
@@ -403,7 +403,7 @@ public class TalleristaDao {
                    valueObject.setName(result.getString("name")); 
                    valueObject.setLast_name(result.getString("last_name")); 
                    valueObject.setEmail(result.getString("email")); 
-                   valueObject.setAge(result.getString("age")); 
+                   valueObject.setAge(result.getInt("age")); 
 
               } else {
                     //System.out.println("Tallerista Object Not Found!");
@@ -441,7 +441,7 @@ public class TalleristaDao {
                    temp.setName(result.getString("name")); 
                    temp.setLast_name(result.getString("last_name")); 
                    temp.setEmail(result.getString("email")); 
-                   temp.setAge(result.getString("age")); 
+                   temp.setAge(result.getInt("age")); 
 
                    searchResults.add(temp);
               }
@@ -458,4 +458,3 @@ public class TalleristaDao {
 
 
 }
-

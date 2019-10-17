@@ -40,7 +40,7 @@ public class Tallerista implements Cloneable, Serializable {
     private String name;
     private String last_name;
     private String email;
-    private String age;
+    private int age;
 
 
 
@@ -96,10 +96,10 @@ public class Tallerista implements Cloneable, Serializable {
           this.email = emailIn;
     }
 
-    public String getAge() {
+    public int getAge() {
           return this.age;
     }
-    public void setAge(String ageIn) {
+    public void setAge(int ageIn) {
           this.age = ageIn;
     }
 
@@ -117,7 +117,7 @@ public class Tallerista implements Cloneable, Serializable {
           String nameIn,
           String last_nameIn,
           String emailIn,
-          String ageIn) {
+          int ageIn) {
           this.id = idIn;
           this.name = nameIn;
           this.last_name = last_nameIn;
@@ -156,10 +156,7 @@ public class Tallerista implements Cloneable, Serializable {
           } else if (!this.email.equals(valueObject.getEmail())) {
                     return(false);
           }
-          if (this.age == null) {
-                    if (valueObject.getAge() != null)
-                           return(false);
-          } else if (!this.age.equals(valueObject.getAge())) {
+          if (valueObject.getAge() != this.age) {
                     return(false);
           }
 
@@ -202,8 +199,7 @@ public class Tallerista implements Cloneable, Serializable {
              cloned.setLast_name(new String(this.last_name)); 
         if (this.email != null)
              cloned.setEmail(new String(this.email)); 
-        if (this.age != null)
-             cloned.setAge(new String(this.age)); 
+        cloned.setAge(this.age); 
         return cloned;
     }
 
