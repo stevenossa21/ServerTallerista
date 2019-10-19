@@ -5,8 +5,8 @@ import java.util.*;
 import java.math.*;
 
  /**
-  * Tallerista Value Object.
-  * This class is value object representing database table Tallerista
+  * Pregunta Value Object.
+  * This class is value object representing database table Pregunta
   * This class is intented to be used together with associated Dao object.
   */
 
@@ -30,21 +30,15 @@ import java.math.*;
 
 
 
-public class Tallerista implements Cloneable, Serializable {
+public class Pregunta implements Cloneable, Serializable {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/** 
+    /** 
      * Persistent Instance variables. This data is directly 
      * mapped to the columns of database table.
      */
     private int id;
-    private String name;
-    private String last_name;
-    private String email;
-    private int age;
+    private String pregunta;
+    private int valor;
 
 
 
@@ -55,10 +49,15 @@ public class Tallerista implements Cloneable, Serializable {
      * argument, which is the primary key of the corresponding table.
      */
 
-    public Tallerista () {
+    public Pregunta () {
 
     }
 
+    public Pregunta (int idIn) {
+
+          this.id = idIn;
+
+    }
 
 
     /** 
@@ -74,32 +73,18 @@ public class Tallerista implements Cloneable, Serializable {
           this.id = idIn;
     }
 
-    public String getName() {
-          return this.name;
+    public String getPregunta() {
+          return this.pregunta;
     }
-    public void setName(String nameIn) {
-          this.name = nameIn;
-    }
-
-    public String getLast_name() {
-          return this.last_name;
-    }
-    public void setLast_name(String last_nameIn) {
-          this.last_name = last_nameIn;
+    public void setPregunta(String preguntaIn) {
+          this.pregunta = preguntaIn;
     }
 
-    public String getEmail() {
-          return this.email;
+    public int getValor() {
+          return this.valor;
     }
-    public void setEmail(String emailIn) {
-          this.email = emailIn;
-    }
-
-    public int getAge() {
-          return this.age;
-    }
-    public void setAge(int ageIn) {
-          this.age = ageIn;
+    public void setValor(int valorIn) {
+          this.valor = valorIn;
     }
 
 
@@ -112,49 +97,34 @@ public class Tallerista implements Cloneable, Serializable {
      * individual set-methods.
      */
 
-    public void setAll(
-          String nameIn,
-          String last_nameIn,
-          String emailIn,
-          int ageIn) {
-          this.name = nameIn;
-          this.last_name = last_nameIn;
-          this.email = emailIn;
-          this.age = ageIn;
+    public void setAll(int idIn,
+          String preguntaIn,
+          int valorIn) {
+          this.id = idIn;
+          this.pregunta = preguntaIn;
+          this.valor = valorIn;
     }
 
 
     /** 
-     * hasEqualMapping-method will compare two Tallerista instances
+     * hasEqualMapping-method will compare two Pregunta instances
      * and return true if they contain same values in all persistent instance 
      * variables. If hasEqualMapping returns true, it does not mean the objects
      * are the same instance. However it does mean that in that moment, they 
      * are mapped to the same row in database.
      */
-    public boolean hasEqualMapping(Tallerista valueObject) {
+    public boolean hasEqualMapping(Pregunta valueObject) {
 
           if (valueObject.getId() != this.id) {
                     return(false);
           }
-          if (this.name == null) {
-                    if (valueObject.getName() != null)
+          if (this.pregunta == null) {
+                    if (valueObject.getPregunta() != null)
                            return(false);
-          } else if (!this.name.equals(valueObject.getName())) {
+          } else if (!this.pregunta.equals(valueObject.getPregunta())) {
                     return(false);
           }
-          if (this.last_name == null) {
-                    if (valueObject.getLast_name() != null)
-                           return(false);
-          } else if (!this.last_name.equals(valueObject.getLast_name())) {
-                    return(false);
-          }
-          if (this.email == null) {
-                    if (valueObject.getEmail() != null)
-                           return(false);
-          } else if (!this.email.equals(valueObject.getEmail())) {
-                    return(false);
-          }
-          if (valueObject.getAge() != this.age) {
+          if (valueObject.getValor() != this.valor) {
                     return(false);
           }
 
@@ -170,13 +140,11 @@ public class Tallerista implements Cloneable, Serializable {
      */
     public String toString() {
         StringBuffer out = new StringBuffer(this.getDaogenVersion());
-        out.append("\nclass Tallerista, mapping to table Tallerista\n");
+        out.append("\nclass Pregunta, mapping to table Pregunta\n");
         out.append("Persistent attributes: \n"); 
         out.append("id = " + this.id + "\n"); 
-        out.append("name = " + this.name + "\n"); 
-        out.append("last_name = " + this.last_name + "\n"); 
-        out.append("email = " + this.email + "\n"); 
-        out.append("age = " + this.age + "\n"); 
+        out.append("pregunta = " + this.pregunta + "\n"); 
+        out.append("valor = " + this.valor + "\n"); 
         return out.toString();
     }
 
@@ -188,16 +156,12 @@ public class Tallerista implements Cloneable, Serializable {
      * will also have all its attributes cloned.
      */
     public Object clone() {
-        Tallerista cloned = new Tallerista();
+        Pregunta cloned = new Pregunta();
 
         cloned.setId(this.id); 
-        if (this.name != null)
-             cloned.setName(new String(this.name)); 
-        if (this.last_name != null)
-             cloned.setLast_name(new String(this.last_name)); 
-        if (this.email != null)
-             cloned.setEmail(new String(this.email)); 
-        cloned.setAge(this.age); 
+        if (this.pregunta != null)
+             cloned.setPregunta(new String(this.pregunta)); 
+        cloned.setValor(this.valor); 
         return cloned;
     }
 

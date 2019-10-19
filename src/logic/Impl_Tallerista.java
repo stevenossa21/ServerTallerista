@@ -21,11 +21,12 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
+	
 	public Tallerista searchTallerista(int id) throws RemoteException {
 		//crear el value object a retornar
-		Tallerista u=new Tallerista(id);
+		Tallerista u=new Tallerista();
 		//crear los DAO a manipular
+		u.setId(id);
 	    TalleristaDao Tallerista= new TalleristaDao();
             
 	    try{
@@ -41,28 +42,14 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
 	    return u;
 	}
 
-	public List searchTalleristas() throws RemoteException {
-		List l=null;	
-		//crear los DAO a manipular
-	    TalleristaDao Tallerista= new TalleristaDao();
-            
-	    try{
-	    	l=Tallerista.loadAll(getConnection());
-	    	
-	    }
-	    catch(SQLException e){
-	    	e.printStackTrace();
-	    }
-	    return l;
-	}
 
 	public boolean updateTallerista(int idIn, String nameIn, String last_nameIn, String emailIn, int ageIn)
 			throws RemoteException {
 		boolean update=true;
 		//crear el value object a actualizar
 		Tallerista u=new Tallerista();
-
-		u.setAll(idIn, nameIn, last_nameIn, emailIn, ageIn);
+		u.setId(idIn);
+		u.setAll(nameIn, last_nameIn, emailIn, ageIn);
 		//crear los DAO a manipular
 	    TalleristaDao Tallerista= new TalleristaDao();
             
@@ -84,7 +71,8 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
 	public boolean delTallerista(int id) throws RemoteException {
 		boolean del=true;
 		//crear el value object a eliminar
-		Tallerista u=new Tallerista(id);
+		Tallerista u=new Tallerista();
+		u.setId(id);
 		//crear los DAO a manipular
 	    TalleristaDao Tallerista= new TalleristaDao();
             
@@ -102,13 +90,13 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
 	    return del;
 	}
 
-	public boolean addTallerista(int idIn, String nameIn, String last_nameIn, String emailIn, int ageIn)
+	public boolean addTallerista(String nameIn, String last_nameIn, String emailIn, int ageIn)
 			throws RemoteException {
 		boolean add = true;
 
 		// crear el value object de Tallerista
-		Tallerista u = new Tallerista(idIn);
-		u.setAll(idIn, nameIn, last_nameIn, emailIn, ageIn);
+		Tallerista u = new Tallerista();
+		u.setAll(nameIn, last_nameIn, emailIn, ageIn);
 		// crear el DAO a manipular
 		TalleristaDao Tallerista = new TalleristaDao();
 		
@@ -137,5 +125,21 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
         return conn;
 	
 	}
+
+	@Override
+	public List<Tallerista> searchTallerista() {
+		List<Tallerista> l = null;
+	    TalleristaDao Tallerista= new TalleristaDao();
+	    try{
+	    	l = Tallerista.loadAll(getConnection());
+	    }
+	    catch(SQLException e){
+	    	l=null;
+	    	e.printStackTrace();
+	    }
+		return l;
+	}
+
+
 
 }

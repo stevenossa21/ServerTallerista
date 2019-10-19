@@ -5,9 +5,9 @@ import java.math.*;
 
 
  /**
-  * Tallerista Data Access Object (DAO).
+  * Pregunta Data Access Object (DAO).
   * This class contains all database handling that is needed to 
-  * permanently store and retrieve Tallerista object instances. 
+  * permanently store and retrieve Pregunta object instances. 
   */
 
  /**
@@ -30,7 +30,7 @@ import java.math.*;
 
 
 
-public class TalleristaDao {
+public class PreguntaDao {
 
 
 
@@ -42,8 +42,8 @@ public class TalleristaDao {
      * NOTE: If you extend the valueObject class, make sure to override the
      * clone() method in it!
      */
-    public Tallerista createValueObject() {
-          return new Tallerista();
+    public Pregunta createValueObject() {
+          return new Pregunta();
     }
 
 
@@ -53,9 +53,9 @@ public class TalleristaDao {
      * for the real load-method which accepts the valueObject as a parameter. Returned
      * valueObject will be created using the createValueObject() method.
      */
-    public Tallerista getObject(Connection conn, int id) throws NotFoundException, SQLException {
+    public Pregunta getObject(Connection conn, int id) throws NotFoundException, SQLException {
 
-          Tallerista valueObject = createValueObject();
+          Pregunta valueObject = createValueObject();
           valueObject.setId(id);
           load(conn, valueObject);
           return valueObject;
@@ -74,9 +74,9 @@ public class TalleristaDao {
      * @param valueObject  This parameter contains the class instance to be loaded.
      *                     Primary-key field must be set for this to work properly.
      */
-    public void load(Connection conn, Tallerista valueObject) throws NotFoundException, SQLException {
+    public void load(Connection conn, Pregunta valueObject) throws NotFoundException, SQLException {
 
-          String sql = "SELECT * FROM Tallerista WHERE (id = ? ) "; 
+          String sql = "SELECT * FROM Pregunta WHERE (id = ? ) "; 
           PreparedStatement stmt = null;
 
           try {
@@ -102,7 +102,8 @@ public class TalleristaDao {
      * @param conn         This method requires working database connection.
      */
     public List loadAll(Connection conn) throws SQLException {
-          String sql = "SELECT * FROM Tallerista ORDER BY id ASC ";
+
+          String sql = "SELECT * FROM Pregunta ORDER BY id ASC ";
           List searchResults = listQuery(conn, conn.prepareStatement(sql));
 
           return searchResults;
@@ -123,22 +124,19 @@ public class TalleristaDao {
      *                     If automatic surrogate-keys are not used the Primary-key 
      *                     field must be set for this to work properly.
      */
-    public synchronized void create(Connection conn, Tallerista valueObject) throws SQLException {
+    public synchronized void create(Connection conn, Pregunta valueObject) throws SQLException {
 
           String sql = "";
           PreparedStatement stmt = null;
           ResultSet result = null;
 
           try {
-               sql = "INSERT INTO Tallerista ( id, name, last_name, "
-               + "email, age) VALUES (?, ?, ?, ?, ?) ";
+               sql = "INSERT INTO Pregunta ( id, pregunta, valor) VALUES (?, ?, ?) ";
                stmt = conn.prepareStatement(sql);
 
                stmt.setInt(1, valueObject.getId()); 
-               stmt.setString(2, valueObject.getName()); 
-               stmt.setString(3, valueObject.getLast_name()); 
-               stmt.setString(4, valueObject.getEmail()); 
-               stmt.setInt(5, valueObject.getAge()); 
+               stmt.setString(2, valueObject.getPregunta()); 
+               stmt.setInt(3, valueObject.getValor()); 
 
                int rowcount = databaseUpdate(conn, stmt);
                if (rowcount != 1) {
@@ -166,21 +164,18 @@ public class TalleristaDao {
      * @param valueObject  This parameter contains the class instance to be saved.
      *                     Primary-key field must be set for this to work properly.
      */
-    public void save(Connection conn, Tallerista valueObject) 
+    public void save(Connection conn, Pregunta valueObject) 
           throws NotFoundException, SQLException {
 
-          String sql = "UPDATE Tallerista SET name = ?, last_name = ?, email = ?, "
-               + "age = ? WHERE (id = ? ) ";
+          String sql = "UPDATE Pregunta SET pregunta = ?, valor = ? WHERE (id = ? ) ";
           PreparedStatement stmt = null;
 
           try {
               stmt = conn.prepareStatement(sql);
-              stmt.setString(1, valueObject.getName()); 
-              stmt.setString(2, valueObject.getLast_name()); 
-              stmt.setString(3, valueObject.getEmail()); 
-              stmt.setInt(4, valueObject.getAge()); 
+              stmt.setString(1, valueObject.getPregunta()); 
+              stmt.setInt(2, valueObject.getValor()); 
 
-              stmt.setInt(5, valueObject.getId()); 
+              stmt.setInt(3, valueObject.getId()); 
 
               int rowcount = databaseUpdate(conn, stmt);
               if (rowcount == 0) {
@@ -210,10 +205,10 @@ public class TalleristaDao {
      * @param valueObject  This parameter contains the class instance to be deleted.
      *                     Primary-key field must be set for this to work properly.
      */
-    public void delete(Connection conn, Tallerista valueObject) 
+    public void delete(Connection conn, Pregunta valueObject) 
           throws NotFoundException, SQLException {
 
-          String sql = "DELETE FROM Tallerista WHERE (id = ? ) ";
+          String sql = "DELETE FROM Pregunta WHERE (id = ? ) ";
           PreparedStatement stmt = null;
 
           try {
@@ -249,7 +244,7 @@ public class TalleristaDao {
      */
     public void deleteAll(Connection conn) throws SQLException {
 
-          String sql = "DELETE FROM Tallerista";
+          String sql = "DELETE FROM Pregunta";
           PreparedStatement stmt = null;
 
           try {
@@ -272,7 +267,7 @@ public class TalleristaDao {
      */
     public int countAll(Connection conn) throws SQLException {
 
-          String sql = "SELECT count(*) FROM Tallerista";
+          String sql = "SELECT count(*) FROM Pregunta";
           PreparedStatement stmt = null;
           ResultSet result = null;
           int allRows = 0;
@@ -306,36 +301,26 @@ public class TalleristaDao {
      * @param valueObject  This parameter contains the class instance where search will be based.
      *                     Primary-key field should not be set.
      */
-    public List searchMatching(Connection conn, Tallerista valueObject) throws SQLException {
+    public List searchMatching(Connection conn, Pregunta valueObject) throws SQLException {
 
           List searchResults;
 
           boolean first = true;
-          StringBuffer sql = new StringBuffer("SELECT * FROM Tallerista WHERE 1=1 ");
+          StringBuffer sql = new StringBuffer("SELECT * FROM Pregunta WHERE 1=1 ");
 
           if (valueObject.getId() != 0) {
               if (first) { first = false; }
               sql.append("AND id = ").append(valueObject.getId()).append(" ");
           }
 
-          if (valueObject.getName() != null) {
+          if (valueObject.getPregunta() != null) {
               if (first) { first = false; }
-              sql.append("AND name LIKE '").append(valueObject.getName()).append("%' ");
+              sql.append("AND pregunta LIKE '").append(valueObject.getPregunta()).append("%' ");
           }
 
-          if (valueObject.getLast_name() != null) {
+          if (valueObject.getValor() != 0) {
               if (first) { first = false; }
-              sql.append("AND last_name LIKE '").append(valueObject.getLast_name()).append("%' ");
-          }
-
-          if (valueObject.getEmail() != null) {
-              if (first) { first = false; }
-              sql.append("AND email LIKE '").append(valueObject.getEmail()).append("%' ");
-          }
-
-          if (valueObject.getAge() != 0) {
-              if (first) { first = false; }
-              sql.append("AND age = ").append(valueObject.getAge()).append(" ");
+              sql.append("AND valor = ").append(valueObject.getValor()).append(" ");
           }
 
 
@@ -388,7 +373,7 @@ public class TalleristaDao {
      * @param stmt         This parameter contains the SQL statement to be excuted.
      * @param valueObject  Class-instance where resulting data will be stored.
      */
-    protected void singleQuery(Connection conn, PreparedStatement stmt, Tallerista valueObject) 
+    protected void singleQuery(Connection conn, PreparedStatement stmt, Pregunta valueObject) 
           throws NotFoundException, SQLException {
 
           ResultSet result = null;
@@ -399,14 +384,12 @@ public class TalleristaDao {
               if (result.next()) {
 
                    valueObject.setId(result.getInt("id")); 
-                   valueObject.setName(result.getString("name")); 
-                   valueObject.setLast_name(result.getString("last_name")); 
-                   valueObject.setEmail(result.getString("email")); 
-                   valueObject.setAge(result.getInt("age")); 
+                   valueObject.setPregunta(result.getString("pregunta")); 
+                   valueObject.setValor(result.getInt("valor")); 
 
               } else {
-                    //System.out.println("Tallerista Object Not Found!");
-                    throw new NotFoundException("Tallerista Object Not Found!");
+                    //System.out.println("Pregunta Object Not Found!");
+                    throw new NotFoundException("Pregunta Object Not Found!");
               }
           } finally {
               if (result != null)
@@ -434,13 +417,11 @@ public class TalleristaDao {
               result = stmt.executeQuery();
 
               while (result.next()) {
-                   Tallerista temp = createValueObject();
+                   Pregunta temp = createValueObject();
 
                    temp.setId(result.getInt("id")); 
-                   temp.setName(result.getString("name")); 
-                   temp.setLast_name(result.getString("last_name")); 
-                   temp.setEmail(result.getString("email")); 
-                   temp.setAge(result.getInt("age")); 
+                   temp.setPregunta(result.getString("pregunta")); 
+                   temp.setValor(result.getInt("valor")); 
 
                    searchResults.add(temp);
               }
