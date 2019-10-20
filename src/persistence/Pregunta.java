@@ -97,10 +97,8 @@ public class Pregunta implements Cloneable, Serializable {
      * individual set-methods.
      */
 
-    public void setAll(int idIn,
-          String preguntaIn,
+    public void setAll(String preguntaIn,
           int valorIn) {
-          this.id = idIn;
           this.pregunta = preguntaIn;
           this.valor = valorIn;
     }
