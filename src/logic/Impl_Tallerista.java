@@ -114,7 +114,7 @@ public class Impl_Tallerista extends UnicastRemoteObject implements ITallerista 
             //registrar la clase del driver
             Class.forName("org.mariadb.jdbc.Driver");
             //obtener el objeto de conexion
-            conn=DriverManager.getConnection("jdbc:mariadb://localhost/taller","jhon","andrea");// login=postgres , contraseña=postgres
+            conn=DriverManager.getConnection("jdbc:mariadb://localhost/taller","root","admin123");// login=postgres , contraseña=postgres
         }
         catch(ClassNotFoundException e){
             e.printStackTrace();
